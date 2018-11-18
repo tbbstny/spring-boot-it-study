@@ -1,0 +1,7 @@
+==============================================================================
+Application Name:       ${spring.application.name}
+Version:                ${application.version}
+Spring-Boot:            ${spring-boot.version}
+Active Profiles:        ${spring.profiles.active}
+Config Enabled:         ${spring.cloud.config.enabled:true}
+==============================================================================
