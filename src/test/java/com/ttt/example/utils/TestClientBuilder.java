@@ -1,5 +1,8 @@
 package com.ttt.example.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,8 @@ public final class TestClientBuilder implements DataBuilder<Client, Client.Clien
 {
     @Autowired
     private ClientRepository clientRepository;
+
+    private static Map<Integer, Client> clients = new HashMap<Integer, Client>();
 
     private static Object[][] testData = {
             {"Client 1", "Client 1 notes"},
@@ -38,7 +43,7 @@ public final class TestClientBuilder implements DataBuilder<Client, Client.Clien
     }
 
     /**
-     * Build a test client
+     * Build a test client.
      */
     @Override
     public ClientBuilder create(int testDataIndex) {
@@ -46,13 +51,24 @@ public final class TestClientBuilder implements DataBuilder<Client, Client.Clien
         Object[] row = getTestData(testDataIndex);
 
         return Client.builder()
+                .id(testDataIndex)
                 .name((String) row[colIdx++])
                 .notes((String) row[colIdx++]);
     }
 
     @Override
     public Client persist(Client client) {
-        return clientRepository.saveAndFlush(client);
+        int testDataIndex = client.getId();
+        Client persistedClient = getClient(testDataIndex);
+        if (persistedClient == null) {
+            persistedClient = clientRepository.saveAndFlush(client);
+            clients.put(testDataIndex, persistedClient);
+        }
+        return persistedClient;
+    }
+
+    private Client getClient(int testClientIndex) {
+        return clients.get(testClientIndex);
     }
 
     public Client addTestClient(ClientBuilder builder) {

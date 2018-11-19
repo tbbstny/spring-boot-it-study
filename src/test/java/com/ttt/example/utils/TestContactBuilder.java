@@ -67,6 +67,8 @@ public final class TestContactBuilder implements DataBuilder<Contact, Contact.Co
 
     @Override
     public Contact persist(Contact contact) {
+        contact.setClient(clientBuilder.persist(contact.getClient()));
+
         return contactRepository.saveAndFlush(contact);
     }
 
@@ -74,7 +76,6 @@ public final class TestContactBuilder implements DataBuilder<Contact, Contact.Co
     public void addAll() {
         for (int i = 0; i < dataRowCount(); i++) {
             Contact contact = create(i).build();
-            contact.setClient(clientBuilder.persist(contact.getClient()));
             persist(contact);
         }
     }

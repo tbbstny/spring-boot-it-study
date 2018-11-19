@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ import com.ttt.example.utils.TestContactBuilder;
 @TestPropertySource(locations = "classpath:application-it.properties")
 public class ContactControllerIT
 {
+    private static Logger logger = LoggerFactory.getLogger(ContactControllerIT.class);
+
     private MockMvc mvc;
 
     @Autowired
@@ -51,6 +55,8 @@ public class ContactControllerIT
     @Test
     @WithMockUser(username = "IT_USER", authorities = {"READ"})
     public void getContactsForClientTest() throws Exception {
+        logger.debug("It Works!");
+
         contactBuilder.addAll();
 
         mvc.perform(get(String.format("/api/v1/clients/%d/contacts", 1))
