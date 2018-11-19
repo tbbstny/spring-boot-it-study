@@ -1,6 +1,7 @@
 package com.ttt.example.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ttt.example.api.model.Client;
 import com.ttt.example.api.model.Contact;
@@ -10,6 +11,7 @@ import com.ttt.example.api.repository.ContactRepository;
 /**
  * Test utility class for creating test Contacts.
  */
+@Component
 public final class TestContactBuilder implements DataBuilder<Contact, Contact.ContactBuilder>
 {
     @Autowired

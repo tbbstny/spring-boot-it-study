@@ -28,7 +28,6 @@ import com.ttt.example.utils.TestContactBuilder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @TestPropertySource(locations = "classpath:application-it.properties")
 public class ContactControllerIT
 {
